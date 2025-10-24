@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>栄養バランスゲーム</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>栄養バランス調理チャレンジ</h1>
+    
+    <div class="controls">
+        <label for="difficulty">難易度:</label>
+        <select id="difficulty">
+            <option value="easy">初級 (完成品選択)</option>
+            <option value="medium">中級 (一部素材から)</option>
+            <option value="hard">上級 (全て素材から)</option>
+            <option value="chef">料理人モード</option>
+        </select>
 
+        <label for="target">対象者:</label>
+        <select id="target">
+            <option value="成人男性">成人男性</option>
+            <option value="成人女性">成人女性</option>
+            </select>
+        <button onclick="startGame()">ゲーム開始</button>
+    </div>
+
+    <hr>
+    
+    <div id="game-area">
+        <h2>献立作成</h2>
+        <p id="target-display"></p>
+        
+        <div id="food-selection">
+            </div>
+        
+        <div id="current-meal">
+            <h3>現在の献立:</h3>
+            <ul id="selected-foods-list"></ul>
+        </div>
+
+        <button onclick="evaluateMeal()">献立を評価する</button>
+    </div>
+
+    <div id="results" class="hidden">
+        <h2>結果</h2>
+        <p id="score-display"></p>
+        <pre id="feedback-display"></pre>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
