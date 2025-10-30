@@ -1,429 +1,448 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuttori</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    // フォントはInterと日本語フォントを優先
-                    fontFamily: {
-                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
-                    },
-                    colors: {
-                        'primary': '#4CAF50', // グリーン
-                        'secondary': '#FFC107', // アンバー
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* UIの視覚的な区別とインタラクション */
-        .food-item {
-            @apply px-4 py-2 rounded-xl text-sm font-semibold transition duration-200 ease-in-out transform hover:scale-[1.02] active:scale-95 shadow-lg border-b-4;
-        }
-        .主食 {
-            @apply bg-yellow-200 text-yellow-800 border-yellow-400 hover:bg-yellow-300;
-        }
-        .主菜 {
-            @apply bg-red-200 text-red-800 border-red-400 hover:bg-red-300;
-        }
-        .副菜 {
-            @apply bg-green-200 text-green-800 border-green-400 hover:bg-green-300;
-        }
-        .素材 {
-            @apply bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 border-dashed border-2;
-        }
-        #feedback-display {
-            white-space: pre-wrap; /* 改行を保持 */
-            text-align: left;
-            padding: 1rem;
-            background-color: #f7f7f7;
-            border-radius: 0.75rem;
-            margin-top: 1rem;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .hidden {
-            display: none !important;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuttori</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    // フォントはInterと日本語フォントを優先
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#4CAF50', // グリーン
+                        'secondary': '#FFC107', // アンバー
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* UIの視覚的な区別とインタラクション */
+        .food-item {
+            @apply px-4 py-2 rounded-xl text-sm font-semibold transition duration-200 ease-in-out transform hover:scale-[1.02] active:scale-95 shadow-lg border-b-4;
+        }
+        .主食 {
+            @apply bg-yellow-200 text-yellow-800 border-yellow-400 hover:bg-yellow-300;
+        }
+        .主菜 {
+            @apply bg-red-200 text-red-800 border-red-400 hover:bg-red-300;
+        }
+        .副菜 {
+            @apply bg-green-200 text-green-800 border-green-400 hover:bg-green-300;
+        }
+        .素材 {
+            @apply bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 border-dashed border-2;
+        }
+        #feedback-display {
+            white-space: pre-wrap; /* 改行を保持 */
+            text-align: left;
+            padding: 1rem;
+            background-color: #f7f7f7;
+            border-radius: 0.75rem;
+            margin-top: 1rem;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 min-h-screen font-sans p-4 sm:p-8">
 
-    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl p-6 md:p-10 border-t-8 border-primary">
-        
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-6">
-            Nuttori
-        </h1>
-        
-        <!-- コントロールエリア -->
-        <div class="controls bg-gray-100 p-4 rounded-xl flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4 mb-8 shadow-inner">
-            
-            <!-- 難易度選択 -->
-            <div class="w-full md:w-auto">
-                <label for="difficulty" class="block text-sm font-medium text-gray-600 mb-1">難易度:</label>
-                <select id="difficulty" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
-                    <option value="easy">初級 (完成品選択)</option>
-                    <option value="medium">中級 (全て選択可能)</option>
-                    <option value="hard">上級 (主食＋素材から選択)</option>
-                    <option value="chef">料理人モード</option>
-                </select>
-            </div>
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl p-6 md:p-10 border-t-8 border-primary">
+        
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-6">
+            Nuttori
+        </h1>
+        
+                <div class="controls bg-gray-100 p-4 rounded-xl flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4 mb-8 shadow-inner">
+            
+                        <div class="w-full md:w-auto">
+                <label for="difficulty" class="block text-sm font-medium text-gray-600 mb-1">難易度:</label>
+                <select id="difficulty" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
+                    <option value="easy">初級 (完成品選択)</option>
+                    <option value="medium">中級 (全て選択可能)</option>
+                    <option value="hard">上級 (主食＋素材から選択)</option>
+                    <option value="chef">料理人モード</option>
+                </select>
+            </div>
 
-            <!-- 対象者選択 -->
-            <div class="w-full md:w-auto">
-                <label for="target" class="block text-sm font-medium text-gray-600 mb-1">対象者:</label>
-                <select id="target" class="w-full p-2 border border-gray-300 rounded-⭐
-                <button onclick="evaluateMeal()" class="bg-secondary text-gray-900 font-extrabold py-3 px-12 rounded-full shadow-xl hover:bg-yellow-400 transition duration-200 transform hover:scale-105 active:scale-95 border-b-4 border-yellow-600">
-                 ⭐ 献立を評価する
-                </button>
-            </div>
+                        <div class="w-full md:w-auto">
+                <label for="target" class="block text-sm font-medium text-gray-600 mb-1">対象者:</label>
+                <select id="target" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
+                    <option value="子供">子供</option>
+                    <option value="成人男性">成人男性</option>
+                    <option value="成人女性">成人女性</option>
+                    <option value="お年寄り">お年寄り</option>
+                </select>
+            </div>
+
+                        <div class="w-full md:w-auto">
+                <button onclick="startGame()" class="bg-primary text-white font-extrabold py-3 px-12 rounded-full shadow-xl hover:bg-green-600 transition duration-200 transform hover:scale-105 active:scale-95 border-b-4 border-green-800 w-full">
+                  ゲーム開始
+                </button>
+            </div>
+        </div>
+        
+        <div id="food-selection" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-4 rounded-xl mb-6 bg-white border border-gray-200 min-h-[100px]">
+            <p class="text-gray-500 text-center col-span-full">難易度と対象者を選び、「ゲーム開始」を押してください。</p>
         </div>
 
-        <!-- 結果エリア -->
-        <div id="results" class="hidden mt-8 p-6 bg-green-50 border-2 border-green-300 rounded-xl shadow-lg">
-            <h2 class="text-3xl font-bold text-green-700 mb-4 text-center">結果発表！</h2>
-            <p id="score-display" class="text-2xl font-extrabold text-center mb-4"></p>
-            <h3 class="text-xl font-semibold text-gray-700 mt-6 border-b pb-2">栄養バランスからのフィードバック:</h3>
-            <pre id="feedback-display" class="text-gray-700 text-sm"></pre>
+        <div class="mb-8 p-4 bg-gray-50 rounded-xl border border-gray-200">
+            <h2 id="target-display" class="text-xl font-bold text-gray-700 mb-3 border-b pb-2">対象者: - (難易度: -)</h2>
+            <h3 class="text-lg font-semibold text-gray-600 mb-2">献立リスト:</h3>
+            <ul id="selected-foods-list" class="space-y-1">
+                <li class="text-gray-500">献立に食品を追加してください</li>
+            </ul>
         </div>
         
-    </div>
+        <div class="mt-8 text-center">
+            <button onclick="evaluateMeal()" class="bg-secondary text-gray-900 font-extrabold py-3 px-12 rounded-full shadow-xl hover:bg-yellow-400 transition duration-200 transform hover:scale-105 active:scale-95 border-b-4 border-yellow-600">
+              ⭐ 献立を評価する
+            </button>
+        </div>
 
-    <!-- 統合された JavaScript ロジック -->
-    <script>
-        let selectedFoods = [];
-        let targetUser = ''; // 対象者を保持する変数
+                <div id="results" class="hidden mt-8 p-6 bg-green-50 border-2 border-green-300 rounded-xl shadow-lg">
+            <h2 class="text-3xl font-bold text-green-700 mb-4 text-center">結果発表！</h2>
+            <p id="score-display" class="text-2xl font-extrabold text-center mb-4"></p>
+            <h3 class="text-xl font-semibold text-gray-700 mt-6 border-b pb-2">栄養バランスからのフィードバック:</h3>
+            <pre id="feedback-display" class="text-gray-700 text-sm"></pre>
+        </div>
+    </div>
 
-        // ---------------------------------------------
-        // 🍎 栄養データと目標値（簡易版）
-        // ---------------------------------------------
+        <script>
+        let selectedFoods = [];
+        let targetUser = ''; // 対象者を保持する変数
 
-        // P: タンパク質(g), L: 脂質(g), C: 炭水化物(g), V: 野菜量(仮想), kcal: カロリー(kcal)
-        const FOOD_NUTRITION_DATA = {
-            /* ---------------- 主食 (Staples) ---------------- */
-            "ごはん": { type: "主食", P: 5, L: 1, C: 80, V: 0, kcal: 350 },
-            "パン": { type: "主食", P: 8, L: 5, C: 60, V: 0, kcal: 300 },
-            "うどん": { type: "主食", P: 7, L: 1, C: 60, V: 0, kcal: 280 },
-            "パスタ": { type: "主食", P: 10, L: 2, C: 70, V: 0, kcal: 350 },
-            "玄米ごはん": { type: "主食", P: 6, L: 2, C: 75, V: 0, kcal: 340 },
-            "蕎麦 (かけ)": { type: "主食", P: 12, L: 3, C: 55, V: 5, kcal: 290 },
-            "サンドイッチ": { type: "主食", P: 15, L: 15, C: 50, V: 20, kcal: 400 },
-            "おにぎり (梅)": { type: "主食", P: 3, L: 0, C: 50, V: 0, kcal: 210 },
-            "食パン (2枚)": { type: "主食", P: 6, L: 4, C: 45, V: 0, kcal: 250 },
+        // ---------------------------------------------
+        // 🍎 栄養データと目標値（簡易版）
+        // ---------------------------------------------
 
-            /* ---------------- 主菜 (Mains) ---------------- */
-            "鮭の塩焼き": { type: "主菜", P: 40, L: 10, C: 0, V: 0, kcal: 250 },
-            "ゆで卵": { type: "主菜", P: 15, L: 12, C: 1, V: 0, kcal: 160 },
-            "麻婆豆腐": { type: "主菜", P: 20, L: 20, C: 10, V: 10, kcal: 300 }, 
-            "豚肉の生姜焼き": { type: "主菜", P: 35, L: 25, C: 10, V: 10, kcal: 450 },
-            "ハンバーグ": { type: "主菜", P: 30, L: 30, C: 15, V: 5, kcal: 500 },
-            "鶏肉の照り焼き": { type: "主菜", P: 38, L: 15, C: 10, V: 0, kcal: 350 },
-            "鯖の味噌煮": { type: "主菜", P: 35, L: 25, C: 10, V: 0, kcal: 410 },
-            "天ぷら盛り合わせ": { type: "主菜", P: 20, L: 40, C: 30, V: 30, kcal: 550 }, // 脂質高め
-            "ステーキ (赤身)": { type: "主菜", P: 50, L: 15, C: 0, V: 0, kcal: 380 },
-            "エビフライ (2尾)": { type: "主菜", P: 18, L: 25, C: 20, V: 0, kcal: 430 }, // 脂質高め
-            
-            /* ---------------- 副菜 (Sides) ---------------- */
-            "野菜サラダ": { type: "副菜", P: 5, L: 5, C: 10, V: 80, kcal: 100 }, 
-            "味噌汁": { type: "副菜", P: 3, L: 1, C: 5, V: 20, kcal: 50 }, 
-            "ほうれん草のおひたし": { type: "副菜", P: 4, L: 1, C: 5, V: 60, kcal: 50 },
-            "ひじきの煮物": { type: "副菜", P: 5, L: 5, C: 15, V: 40, kcal: 130 },
-            "豚汁": { type: "副菜", P: 15, L: 10, C: 15, V: 70, kcal: 200 }, // 高タンパク・高野菜の万能副菜
-            "冷奴": { type: "副菜", P: 10, L: 6, C: 2, V: 0, kcal: 100 },
-            "納豆": { type: "副菜", P: 10, L: 5, C: 10, V: 0, kcal: 110 },
-            "きんぴらごぼう": { type: "副菜", P: 3, L: 3, C: 25, V: 40, kcal: 150 }, // 炭水化物多め
-            "漬物 (少量)": { type: "副菜", P: 1, L: 0, C: 5, V: 10, kcal: 20 },
-            "ポテトサラダ": { type: "副菜", P: 5, L: 15, C: 25, V: 10, kcal: 250 }, // 脂質/炭水化物多め
-            
-            /* ---------------- 素材 (Ingredients) ---------------- */
-            "きゅうり": { type: "素材", P: 1, L: 0, C: 5, V: 50, kcal: 15 },
-            "豆腐 (木綿)": { type: "素材", P: 10, L: 6, C: 2, V: 0, kcal: 100 },
-            "鶏むね肉": { type: "素材", P: 50, L: 5, C: 0, V: 0, kcal: 250 },
-            "ブロッコリー": { type: "素材", P: 5, L: 0, C: 10, V: 100, kcal: 50 },
-            "牛肉": { type: "素材", P: 45, L: 35, C: 0, V: 0, kcal: 500 },
-            "トマト": { type: "素材", P: 1, L: 0, C: 5, V: 50, kcal: 20 },
-            "レタス": { type: "素材", P: 1, L: 0, C: 2, V: 40, kcal: 10 },
-            "じゃがいも": { type: "素材", P: 3, L: 0, C: 40, V: 10, kcal: 170 },
-            "アボカド": { type: "素材", P: 2, L: 20, C: 8, V: 10, kcal: 230 }, // 脂質多め
-            "海苔 (数枚)": { type: "素材", P: 2, L: 0, C: 3, V: 10, kcal: 20 },
-            "マヨネーズ (大さじ1)": { type: "素材", P: 0, L: 15, C: 1, V: 0, kcal: 140 }, // ほぼ脂質
-            "油揚げ": { type: "素材", P: 8, L: 10, C: 1, V: 0, kcal: 130 },
-            "白米 (大盛り)": { type: "素材", P: 7, L: 1, C: 110, V: 0, kcal: 480 }, // カロリー高め
-            "ツナ缶 (水煮)": { type: "素材", P: 25, L: 5, C: 0, V: 0, kcal: 150 },
-            "さつまいも": { type: "素材", P: 2, L: 0, C: 50, V: 10, kcal: 220 }, // 炭水化物と食物繊維
-            "かぼちゃ": { type: "素材", P: 3, L: 1, C: 20, V: 60, kcal: 90 }, // 野菜かつ炭水化物
-            "きのこ (一皿)": { type: "素材", P: 4, L: 1, C: 10, V: 70, kcal: 50 }, // 低カロリー、高ビタミン
-            "わかめ (乾燥)": { type: "素材", P: 1, L: 0, C: 2, V: 30, kcal: 10 }, // 海藻、ミネラル
-            "鶏もも肉": { type: "素材", P: 35, L: 20, C: 0, V: 0, kcal: 320 }, // 鶏むねより脂質多め
-            "マグロ (刺身)": { type: "素材", P: 45, L: 5, C: 0, V: 0, kcal: 230 }, // 高タンパク、低脂質
-            "卵黄 (1個)": { type: "素材", P: 3, L: 5, C: 0, V: 0, kcal: 60 }, // 脂質、コレステロール
-            "牛乳 (200ml)": { type: "素材", P: 7, L: 8, C: 10, V: 0, kcal: 130 }, // カルシウム
-            "植物油 (大さじ1)": { type: "素材", P: 0, L: 14, C: 0, V: 0, kcal: 120 }, // ほぼ脂質
-        };
+        // P: タンパク質(g), L: 脂質(g), C: 炭水化物(g), V: 野菜量(仮想), kcal: カロリー(kcal)
+        const FOOD_NUTRITION_DATA = {
+            /* ---------------- 主食 (Staples) ---------------- */
+            "ごはん": { type: "主食", P: 5, L: 1, C: 80, V: 0, kcal: 350 },
+            "パン": { type: "主食", P: 8, L: 5, C: 60, V: 0, kcal: 300 },
+            "うどん": { type: "主食", P: 7, L: 1, C: 60, V: 0, kcal: 280 },
+            "パスタ": { type: "主食", P: 10, L: 2, C: 70, V: 0, kcal: 350 },
+            "玄米ごはん": { type: "主食", P: 6, L: 2, C: 75, V: 0, kcal: 340 },
+            "蕎麦 (かけ)": { type: "主食", P: 12, L: 3, C: 55, V: 5, kcal: 290 },
+            "サンドイッチ": { type: "主食", P: 15, L: 15, C: 50, V: 20, kcal: 400 },
+            "おにぎり (梅)": { type: "主食", P: 3, L: 0, C: 50, V: 0, kcal: 210 },
+            "食パン (2枚)": { type: "主食", P: 6, L: 4, C: 45, V: 0, kcal: 250 },
 
-        // 対象者別の一食の推奨摂取量（簡略化：一日の1/3程度を想定）
-        const TARGET_RDA = {
-            "子供": { P_min: 15, P_max: 25, L_min: 10, L_max: 30, C_min: 70, C_max: 120, V_min: 50, kcal_max: 700 },
-            "成人男性": { P_min: 20, P_max: 35, L_min: 15, L_max: 40, C_min: 100, C_max: 160, V_min: 100, kcal_max: 900 },
-            "成人女性": { P_min: 18, P_max: 30, L_min: 12, L_max: 35, C_min: 80, C_max: 140, V_min: 80, kcal_max: 800 },
-            "お年寄り": { P_min: 25, P_max: 35, L_min: 10, L_max: 30, C_min: 70, C_max: 120, V_min: 80, kcal_max: 750 }, // タンパク質を多めに設定
-        };
+            /* ---------------- 主菜 (Mains) ---------------- */
+            "鮭の塩焼き": { type: "主菜", P: 40, L: 10, C: 0, V: 0, kcal: 250 },
+            "ゆで卵": { type: "主菜", P: 15, L: 12, C: 1, V: 0, kcal: 160 },
+            "麻婆豆腐": { type: "主菜", P: 20, L: 20, C: 10, V: 10, kcal: 300 }, 
+            "豚肉の生姜焼き": { type: "主菜", P: 35, L: 25, C: 10, V: 10, kcal: 450 },
+            "ハンバーグ": { type: "主菜", P: 30, L: 30, C: 15, V: 5, kcal: 500 },
+            "鶏肉の照り焼き": { type: "主菜", P: 38, L: 15, C: 10, V: 0, kcal: 350 },
+            "鯖の味噌煮": { type: "主菜", P: 35, L: 25, C: 10, V: 0, kcal: 410 },
+            "天ぷら盛り合わせ": { type: "主菜", P: 20, L: 40, C: 30, V: 30, kcal: 550 }, // 脂質高め
+            "ステーキ (赤身)": { type: "主菜", P: 50, L: 15, C: 0, V: 0, kcal: 380 },
+            "エビフライ (2尾)": { type: "主菜", P: 18, L: 25, C: 20, V: 0, kcal: 430 }, // 脂質高め
+            
+            /* ---------------- 副菜 (Sides) ---------------- */
+            "野菜サラダ": { type: "副菜", P: 5, L: 5, C: 10, V: 80, kcal: 100 }, 
+            "味噌汁": { type: "副菜", P: 3, L: 1, C: 5, V: 20, kcal: 50 }, 
+            "ほうれん草のおひたし": { type: "副菜", P: 4, L: 1, C: 5, V: 60, kcal: 50 },
+            "ひじきの煮物": { type: "副菜", P: 5, L: 5, C: 15, V: 40, kcal: 130 },
+            "豚汁": { type: "副菜", P: 15, L: 10, C: 15, V: 70, kcal: 200 }, // 高タンパク・高野菜の万能副菜
+            "冷奴": { type: "副菜", P: 10, L: 6, C: 2, V: 0, kcal: 100 },
+            "納豆": { type: "副菜", P: 10, L: 5, C: 10, V: 0, kcal: 110 },
+            "きんぴらごぼう": { type: "副菜", P: 3, L: 3, C: 25, V: 40, kcal: 150 }, // 炭水化物多め
+            "漬物 (少量)": { type: "副菜", P: 1, L: 0, C: 5, V: 10, kcal: 20 },
+            "ポテトサラダ": { type: "副菜", P: 5, L: 15, C: 25, V: 10, kcal: 250 }, // 脂質/炭水化物多め
+            
+            /* ---------------- 素材 (Ingredients) ---------------- */
+            "きゅうり": { type: "素材", P: 1, L: 0, C: 5, V: 50, kcal: 15 },
+            "豆腐 (木綿)": { type: "素材", P: 10, L: 6, C: 2, V: 0, kcal: 100 },
+            "鶏むね肉": { type: "素材", P: 50, L: 5, C: 0, V: 0, kcal: 250 },
+            "ブロッコリー": { type: "素材", P: 5, L: 0, C: 10, V: 100, kcal: 50 },
+            "牛肉": { type: "素材", P: 45, L: 35, C: 0, V: 0, kcal: 500 },
+            "トマト": { type: "素材", P: 1, L: 0, C: 5, V: 50, kcal: 20 },
+            "レタス": { type: "素材", P: 1, L: 0, C: 2, V: 40, kcal: 10 },
+            "じゃがいも": { type: "素材", P: 3, L: 0, C: 40, V: 10, kcal: 170 },
+            "アボカド": { type: "素材", P: 2, L: 20, C: 8, V: 10, kcal: 230 }, // 脂質多め
+            "海苔 (数枚)": { type: "素材", P: 2, L: 0, C: 3, V: 10, kcal: 20 },
+            "マヨネーズ (大さじ1)": { type: "素材", P: 0, L: 15, C: 1, V: 0, kcal: 140 }, // ほぼ脂質
+            "油揚げ": { type: "素材", P: 8, L: 10, C: 1, V: 0, kcal: 130 },
+            "白米 (大盛り)": { type: "素材", P: 7, L: 1, C: 110, V: 0, kcal: 480 }, // カロリー高め
+            "ツナ缶 (水煮)": { type: "素材", P: 25, L: 5, C: 0, V: 0, kcal: 150 },
+            "さつまいも": { type: "素材", P: 2, L: 0, C: 50, V: 10, kcal: 220 }, // 炭水化物と食物繊維
+            "かぼちゃ": { type: "素材", P: 3, L: 1, C: 20, V: 60, kcal: 90 }, // 野菜かつ炭水化物
+            "きのこ (一皿)": { type: "素材", P: 4, L: 1, C: 10, V: 70, kcal: 50 }, // 低カロリー、高ビタミン
+            "わかめ (乾燥)": { type: "素材", P: 1, L: 0, C: 2, V: 30, kcal: 10 }, // 海藻、ミネラル
+            "鶏もも肉": { type: "素材", P: 35, L: 20, C: 0, V: 0, kcal: 320 }, // 鶏むねより脂質多め
+            "マグロ (刺身)": { type: "素材", P: 45, L: 5, C: 0, V: 0, kcal: 230 }, // 高タンパク、低脂質
+            "卵黄 (1個)": { type: "素材", P: 3, L: 5, C: 0, V: 0, kcal: 60 }, // 脂質、コレステロール
+            "牛乳 (200ml)": { type: "素材", P: 7, L: 8, C: 10, V: 0, kcal: 130 }, // カルシウム
+            "植物油 (大さじ1)": { type: "素材", P: 0, L: 14, C: 0, V: 0, kcal: 120 }, // ほぼ脂質
+        };
 
-        // ---------------------------------------------
-        // 🎮 ゲーム初期設定とUI操作
-        // ---------------------------------------------
+        // 対象者別の一食の推奨摂取量（簡略化：一日の1/3程度を想定）
+        const TARGET_RDA = {
+            "子供": { P_min: 15, P_max: 25, L_min: 10, L_max: 30, C_min: 70, C_max: 120, V_min: 50, kcal_max: 700 },
+            "成人男性": { P_min: 20, P_max: 35, L_min: 15, L_max: 40, C_min: 100, C_max: 160, V_min: 100, kcal_max: 900 },
+            "成人女性": { P_min: 18, P_max: 30, L_min: 12, L_max: 35, C_min: 80, C_max: 140, V_min: 80, kcal_max: 800 },
+            "お年寄り": { P_min: 25, P_max: 35, L_min: 10, L_max: 30, C_min: 70, C_max: 120, V_min: 80, kcal_max: 750 }, // タンパク質を多めに設定
+        };
 
-        function startGame() {
-            const difficulty = document.getElementById('difficulty').value;
-            targetUser = document.getElementById('target').value;
+        // ---------------------------------------------
+        // 🎮 ゲーム初期設定とUI操作
+        // ---------------------------------------------
 
-            // 料理人モードの特殊設定
-            if (difficulty === 'chef') {
-                const targets = ["子供", "成人男性", "成人女性", "お年寄り"];
-                
-                // 1. 献立を作る対象者 (表示用) - 3人ランダムに選択
-                const randomTargets = [];
-                // 確実に2種類以上の対象者を選ぶようにする
-                let tempTargets = [...targets];
-                randomTargets.push(tempTargets.splice(Math.floor(Math.random() * tempTargets.length), 1)[0]);
-                randomTargets.push(tempTargets.splice(Math.floor(Math.random() * tempTargets.length), 1)[0]);
-                randomTargets.push(targets[Math.floor(Math.random() * targets.length)]); // 3人目は重複可
+        function startGame() {
+            const difficulty = document.getElementById('difficulty').value;
+            targetUser = document.getElementById('target').value;
 
-                // 2. 評価基準とする対象者をランダムに選択
-                const evaluationTarget = targets[Math.floor(Math.random() * targets.length)];
+            // 料理人モードの特殊設定
+            if (difficulty === 'chef') {
+                const targets = ["子供", "成人男性", "成人女性", "お年寄り"];
+                
+                // 1. 献立を作る対象者 (表示用) - 3人ランダムに選択
+                const randomTargets = [];
+                // 確実に2種類以上の対象者を選ぶようにする
+                let tempTargets = [...targets];
+                randomTargets.push(tempTargets.splice(Math.floor(Math.random() * tempTargets.length), 1)[0]);
+                randomTargets.push(tempTargets.splice(Math.floor(Math.random() * tempTargets.length), 1)[0]);
+                randomTargets.push(targets[Math.floor(Math.random() * targets.length)]); // 3人目は重複可
 
-                document.getElementById('target-display').textContent = 
-                    `対象者 (料理人モード): ${randomTargets.join(' と ')} (難易度: ${difficulty})`;
-                
-                // 評価基準をtargetUserに設定
-                targetUser = evaluationTarget; 
-                
-                // カスタムアラートボックスの代わりに、UI内にメッセージを表示
-                showGameMessage(`🔔 料理人モード開始！${randomTargets.join('、')}の3人全員に合わせた献立を作ってください！\n（評価は**${evaluationTarget}**の栄養基準で厳しく行われます）`);
-            } else {
-                document.getElementById('target-display').textContent = 
-                    `対象者: ${targetUser} (難易度: ${difficulty})`;
-            }
+                // 2. 評価基準とする対象者をランダムに選択
+                const evaluationTarget = targets[Math.floor(Math.random() * targets.length)];
 
-            selectedFoods = [];
-            updateSelectedList();
-            displayFoodSelection(difficulty);
-            document.getElementById('results').classList.add('hidden');
-        }
+                document.getElementById('target-display').textContent = 
+                    `対象者 (料理人モード): ${randomTargets.join(' と ')} (難易度: ${difficulty})`;
+                
+                // 評価基準をtargetUserに設定
+                targetUser = evaluationTarget; 
+                
+                // カスタムアラートボックスの代わりに、UI内にメッセージを表示
+                showGameMessage(`🔔 料理人モード開始！${randomTargets.join('、')}の3人全員に合わせた献立を作ってください！\n（評価は**${evaluationTarget}**の栄養基準で厳しく行われます）`);
+            } else {
+                document.getElementById('target-display').textContent = 
+                    `対象者: ${targetUser} (難易度: ${difficulty})`;
+            }
 
-        function showGameMessage(message) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
-            messageDiv.innerHTML = `
-                <div class="bg-white p-6 rounded-lg shadow-2xl text-center max-w-sm">
-                    <p class="text-xl font-semibold mb-4">${message}</p>
-                    <button onclick="this.parentNode.parentNode.remove()" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-green-600">閉じる</button>
-                </div>
-            `;
-            document.body.appendChild(messageDiv);
-        }
+            selectedFoods = [];
+            updateSelectedList();
+            displayFoodSelection(difficulty);
+            document.getElementById('results').classList.add('hidden');
+        }
 
-        function displayFoodSelection(difficulty) {
-            const selectionDiv = document.getElementById('food-selection');
-            selectionDiv.innerHTML = '';
-            
-            let foodsToShow = [];
-            
-            // 全ての食品データを配列に変換
-            const allFoods = Object.keys(FOOD_NUTRITION_DATA).map(name => ({
-                name: name,
-                type: FOOD_NUTRITION_DATA[name].type
-            }));
+        function showGameMessage(message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            messageDiv.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-2xl text-center max-w-sm">
+                    <p class="text-xl font-semibold mb-4">${message}</p>
+                    <button onclick="this.parentNode.parentNode.remove()" class="bg-primary text-white py-2 px-6 rounded-lg hover:bg-green-600">閉じる</button>
+                </div>
+            `;
+            document.body.appendChild(messageDiv);
+        }
 
-            if (difficulty === 'easy') {
-                // 初級: 完成料理（主食、主菜、副菜）のみ
-                foodsToShow = allFoods.filter(f => f.type !== '素材');
-            } else if (difficulty === 'medium') {
-                // 中級: 全てのカテゴリを表示
-                foodsToShow = allFoods;
-            } else if (difficulty === 'hard') {
-                // 🌟 上級: 素材カテゴリ + 主食カテゴリから選択
-                foodsToShow = allFoods.filter(f => f.type === '素材' || f.type === '主食');
-            } else { // 'chef'モード
-                // 料理人モード: 全ての食品を表示
-                foodsToShow = allFoods;
-            }
+        function displayFoodSelection(difficulty) {
+            const selectionDiv = document.getElementById('food-selection');
+            selectionDiv.innerHTML = '';
+            
+            let foodsToShow = [];
+            
+            // 全ての食品データを配列に変換
+            const allFoods = Object.keys(FOOD_NUTRITION_DATA).map(name => ({
+                name: name,
+                type: FOOD_NUTRITION_DATA[name].type
+            }));
 
-            foodsToShow.forEach(food => {
-                const button = document.createElement('button');
-                button.textContent = food.name;
-                // ボタンのデザインに役立つよう、タイプをクラスに追加
-                button.classList.add('food-item', food.type); 
-                button.onclick = () => addFood(food.name);
-                selectionDiv.appendChild(button);
-            });
+            if (difficulty === 'easy') {
+                // 初級: 完成料理（主食、主菜、副菜）のみ
+                foodsToShow = allFoods.filter(f => f.type !== '素材');
+            } else if (difficulty === 'medium') {
+                // 中級: 全てのカテゴリを表示
+                foodsToShow = allFoods;
+            } else if (difficulty === 'hard') {
+                // 🌟 上級: 素材カテゴリ + 主食カテゴリから選択
+                foodsToShow = allFoods.filter(f => f.type === '素材' || f.type === '主食');
+            } else { // 'chef'モード
+                // 料理人モード: 全ての食品を表示
+                foodsToShow = allFoods;
+            }
 
-            if (foodsToShow.length === 0) {
-                 selectionDiv.innerHTML = '<p class="text-gray-500">選択可能な食材がありません。難易度を見直すか、「ゲーム開始」を押してください。</p>';
-            }
-        }
+            foodsToShow.forEach(food => {
+                const button = document.createElement('button');
+                button.textContent = food.name;
+                // ボタンのデザインに役立つよう、タイプをクラスに追加
+                button.classList.add('food-item', food.type); 
+                button.onclick = () => addFood(food.name);
+                selectionDiv.appendChild(button);
+            });
 
-        function addFood(foodName) {
-            selectedFoods.push(foodName);
-            updateSelectedList();
-        }
+            if (foodsToShow.length === 0) {
+                 selectionDiv.innerHTML = '<p class="text-gray-500">選択可能な食材がありません。難易度を見直すか、「ゲーム開始」を押してください。</p>';
+            }
+        }
 
-        function updateSelectedList() {
-            const ul = document.getElementById('selected-foods-list');
-            ul.innerHTML = '';
-            
-            if (selectedFoods.length === 0) {
-                ul.innerHTML = '<li class="text-gray-500">献立に食品を追加してください</li>';
-                return;
-            }
+        function addFood(foodName) {
+            selectedFoods.push(foodName);
+            updateSelectedList();
+        }
 
-            selectedFoods.forEach((food, index) => {
-                const li = document.createElement('li');
-                li.className = 'flex items-center justify-between py-1 text-gray-800';
-                li.innerHTML = `
-                    <span>${food}</span>
-                    <button onclick="removeFood(${index})" class="text-red-500 hover:text-red-700 font-semibold text-xs transition duration-150 p-1 rounded-full bg-red-100">
-                        削除
-                    </button>`;
-                ul.appendChild(li);
-            });
-        }
+        function updateSelectedList() {
+            const ul = document.getElementById('selected-foods-list');
+            ul.innerHTML = '';
+            
+            if (selectedFoods.length === 0) {
+                ul.innerHTML = '<li class="text-gray-500">献立に食品を追加してください</li>';
+                return;
+            }
 
-        function removeFood(index) {
-            selectedFoods.splice(index, 1); // 配列から該当要素を削除
-            updateSelectedList();
-        }
+            selectedFoods.forEach((food, index) => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center justify-between py-1 text-gray-800';
+                li.innerHTML = `
+                    <span>${food}</span>
+                    <button onclick="removeFood(${index})" class="text-red-500 hover:text-red-700 font-semibold text-xs transition duration-150 p-1 rounded-full bg-red-100">
+                        削除
+                    </button>`;
+                ul.appendChild(li);
+            });
+        }
 
-        // ---------------------------------------------
-        // ⭐ 評価ロジック
-        // ---------------------------------------------
+        function removeFood(index) {
+            selectedFoods.splice(index, 1); // 配列から該当要素を削除
+            updateSelectedList();
+        }
 
-        function calculateNutrition() {
-            let total = { P: 0, L: 0, C: 0, V: 0, kcal: 0 };
-            
-            selectedFoods.forEach(foodName => {
-                const data = FOOD_NUTRITION_DATA[foodName];
-                if (data) {
-                    total.P += data.P;
-                    total.L += data.L;
-                    total.C += data.C;
-                    total.V += data.V;
-                    total.kcal += data.kcal;
-                }
-            });
-            return total;
-        }
+        // ---------------------------------------------
+        // ⭐ 評価ロジック
+        // ---------------------------------------------
 
-        function evaluateMeal() {
-            if (selectedFoods.length === 0) {
-                showGameMessage("献立を選んでください！");
-                return;
-            }
-            
-            const target = targetUser; // 現在の対象者 (料理人モードではランダムに選ばれた評価基準)
-            const targetRDA = TARGET_RDA[target];
-            const currentNutrition = calculateNutrition();
-            
-            let score = 0;
-            let feedback = [];
-            let maxScore = 0;
+        function calculateNutrition() {
+            let total = { P: 0, L: 0, C: 0, V: 0, kcal: 0 };
+            
+            selectedFoods.forEach(foodName => {
+                const data = FOOD_NUTRITION_DATA[foodName];
+                if (data) {
+                    total.P += data.P;
+                    total.L += data.L;
+                    total.C += data.C;
+                    total.V += data.V;
+                    total.kcal += data.kcal;
+                }
+            });
+            return total;
+        }
 
-            // 1. 主要栄養素のバランス評価
-            const nutrients = ['P', 'L', 'C']; // タンパク質, 脂質, 炭水化物
-            
-            nutrients.forEach(n => {
-                maxScore += 200; // 各栄養素の理想スコア
-                const current = currentNutrition[n];
-                const min = targetRDA[`${n}_min`];
-                const max = targetRDA[`${n}_max`];
-                const name = { P: 'タンパク質', L: '脂質', C: '炭水化物' }[n];
-                
-                if (current >= min && current <= max) {
-                    score += 200; // 理想的な範囲
-                    feedback.push(`✅ ${name}: 理想的な摂取量です (${current.toFixed(1)}g、目標 ${min}-${max}g)。`);
-                } else if (current < min) {
-                    const penalty = Math.min(150, (min - current) * 10);
-                    score += 200 - penalty;
-                    feedback.push(`⚠️ ${name}: 不足しています！最低${min}g必要です (${current.toFixed(1)}g)。`);
-                } else if (current > max * 1.5) {
-                    score += 50; // 大幅過剰
-                    feedback.push(`❌ ${name}: 大幅に過剰です！健康上の注意が必要です (${current.toFixed(1)}g)。`);
-                } else if (current > max) {
-                    score += 100; // やや過剰
-                    feedback.push(`⚠️ ${name}: やや過剰です。最大${max}gに抑えましょう (${current.toFixed(1)}g)。`);
-                }
-            });
+        function evaluateMeal() {
+            if (selectedFoods.length === 0) {
+                showGameMessage("献立を選んでください！");
+                return;
+            }
+            
+            const target = targetUser; // 現在の対象者 (料理人モードではランダムに選ばれた評価基準)
+            const targetRDA = TARGET_RDA[target];
+            const currentNutrition = calculateNutrition();
+            
+            let score = 0;
+            let feedback = [];
+            let maxScore = 0;
 
-            // 2. 野菜（ビタミン/ミネラル）の評価
-            maxScore += 300;
-            const vMin = targetRDA.V_min;
-            if (currentNutrition.V >= vMin) {
-                score += 300;
-                feedback.push(`✅ 野菜/ビタミン: 目標量${vMin}gを達成しました！`);
-            } else {
-                score += 150;
-                feedback.push(`⚠️ 野菜/ビタミン: 不足しています。もう少し野菜を取り入れましょう (${currentNutrition.V}g)。`);
-            }
+            // 1. 主要栄養素のバランス評価
+            const nutrients = ['P', 'L', 'C']; // タンパク質, 脂質, 炭水化物
+            
+            nutrients.forEach(n => {
+                maxScore += 200; // 各栄養素の理想スコア
+                const current = currentNutrition[n];
+                const min = targetRDA[`${n}_min`];
+                const max = targetRDA[`${n}_max`];
+                const name = { P: 'タンパク質', L: '脂質', C: '炭水化物' }[n];
+                
+                if (current >= min && current <= max) {
+                    score += 200; // 理想的な範囲
+                    feedback.push(`✅ ${name}: 理想的な摂取量です (${current.toFixed(1)}g、目標 ${min}-${max}g)。`);
+                } else if (current < min) {
+                    const penalty = Math.min(150, (min - current) * 10);
+                    score += 200 - penalty;
+                    feedback.push(`⚠️ ${name}: 不足しています！最低${min}g必要です (${current.toFixed(1)}g)。`);
+                } else if (current > max * 1.5) {
+                    score += 50; // 大幅過剰
+                    feedback.push(`❌ ${name}: 大幅に過剰です！健康上の注意が必要です (${current.toFixed(1)}g)。`);
+                } else if (current > max) {
+                    score += 100; // やや過剰
+                    feedback.push(`⚠️ ${name}: やや過剰です。最大${max}gに抑えましょう (${current.toFixed(1)}g)。`);
+                }
+            });
 
-            // 3. 総カロリーの評価
-            maxScore += 200;
-            const kcalMax = targetRDA.kcal_max;
-            const kcalMin = kcalMax * 0.7;
-            if (currentNutrition.kcal <= kcalMax * 1.1 && currentNutrition.kcal >= kcalMin) {
-                score += 200;
-                feedback.push(`✅ カロリー: 適切な範囲です (${currentNutrition.kcal}kcal、目標 ${kcalMin.toFixed(0)}-${(kcalMax * 1.1).toFixed(0)}kcal)。`);
-            } else if (currentNutrition.kcal > kcalMax * 1.1) {
-                score += 50;
-                feedback.push(`⚠️ カロリー: 過剰です (${currentNutrition.kcal}kcal)。食べ過ぎに注意！`);
-            } else {
-                score += 100;
-                feedback.push(`⚠️ カロリー: 少し足りません (${currentNutrition.kcal}kcal)。`);
-            }
+            // 2. 野菜（ビタミン/ミネラル）の評価
+            maxScore += 300;
+            const vMin = targetRDA.V_min;
+            if (currentNutrition.V >= vMin) {
+                score += 300;
+                feedback.push(`✅ 野菜/ビタミン: 目標量${vMin}gを達成しました！`);
+            } else {
+                score += 150;
+                feedback.push(`⚠️ 野菜/ビタミン: 不足しています。もう少し野菜を取り入れましょう (${currentNutrition.V}g)。`);
+            }
 
-            // 4. 品目数のボーナス（多様性）
-            score += Math.min(100, selectedFoods.length * 20);
-            maxScore += 100; // 最大品目数ボーナスとして仮に100点加算
+            // 3. 総カロリーの評価
+            maxScore += 200;
+            const kcalMax = targetRDA.kcal_max;
+            const kcalMin = kcalMax * 0.7;
+            if (currentNutrition.kcal <= kcalMax * 1.1 && currentNutrition.kcal >= kcalMin) {
+                score += 200;
+                feedback.push(`✅ カロリー: 適切な範囲です (${currentNutrition.kcal}kcal、目標 ${kcalMin.toFixed(0)}-${(kcalMax * 1.1).toFixed(0)}kcal)。`);
+            } else if (currentNutrition.kcal > kcalMax * 1.1) {
+                score += 50;
+                feedback.push(`⚠️ カロリー: 過剰です (${currentNutrition.kcal}kcal)。食べ過ぎに注意！`);
+            } else {
+                score += 100;
+                feedback.push(`⚠️ カロリー: 少し足りません (${currentNutrition.kcal}kcal)。`);
+            }
 
-            // 最終スコア表示
-            const finalScore = Math.max(0, score);
-            
-            // 結果表示を更新
-            document.getElementById('score-display').textContent = `総合スコア: ${finalScore}点 / ${maxScore}点満点`;
-            
-            // 現在の栄養素表示（デバッグ・学習用）
-            const nutritionSummary = `
+            // 4. 品目数のボーナス（多様性）
+            score += Math.min(100, selectedFoods.length * 20);
+            maxScore += 100; // 最大品目数ボーナスとして仮に100点加算
+
+            // 最終スコア表示
+            const finalScore = Math.max(0, score);
+            
+            // 結果表示を更新
+            document.getElementById('score-display').textContent = `総合スコア: ${finalScore}点 / ${maxScore}点満点`;
+            
+            // 現在の栄養素表示（デバッグ・学習用）
+            const nutritionSummary = `
 --- 献立の栄養価サマリー (評価基準: ${target}) ---
 P (タンパク質): ${currentNutrition.P.toFixed(1)} g (目標: ${targetRDA.P_min}-${targetRDA.P_max}g)
 L (脂質): ${currentNutrition.L.toFixed(1)} g (目標: ${targetRDA.L_min}-${targetRDA.L_max}g)
 C (炭水化物): ${currentNutrition.C.toFixed(1)} g (目標: ${targetRDA.C_min}-${targetRDA.C_max}g)
 V (野菜仮想量): ${currentNutrition.V} g (目標: ${targetRDA.V_min}g以上)
 総カロリー: ${currentNutrition.kcal} kcal (目安: ${kcalMin.toFixed(0)}-${kcalMax.toFixed(0)}kcal)
-            `;
-            
-            document.getElementById('feedback-display').textContent = feedback.join('\n') + nutritionSummary;
-            document.getElementById('results').classList.remove('hidden');
+            `;
+            
+            document.getElementById('feedback-display').textContent = feedback.join('\n') + nutritionSummary;
+            document.getElementById('results').classList.remove('hidden');
 
-            // スコアに応じて結果ボックスの色を変える
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.classList.remove('bg-green-50', 'bg-yellow-50', 'bg-red-50', 'border-green-300', 'border-yellow-300', 'border-red-300');
-            
-            if (finalScore >= maxScore * 0.8) {
-                resultsDiv.classList.add('bg-green-50', 'border-green-300');
-                document.getElementById('score-display').classList.add('text-green-700');
-            } else if (finalScore >= maxScore * 0.5) {
-                resultsDiv.classList.add('bg-yellow-50', 'border-yellow-300');
-                document.getElementById('score-display').classList.add('text-yellow-700');
-            } else {
-                resultsDiv.classList.add('bg-red-50', 'border-red-300');
-                document.getElementById('score-display').classList.add('text-red-700');
-            }
-        }
-    </script>
+            // スコアに応じて結果ボックスの色を変える
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.classList.remove('bg-green-50', 'bg-yellow-50', 'bg-red-50', 'border-green-300', 'border-yellow-300', 'border-red-300');
+            
+            if (finalScore >= maxScore * 0.8) {
+                resultsDiv.classList.add('bg-green-50', 'border-green-300');
+                document.getElementById('score-display').classList.add('text-green-700');
+            } else if (finalScore >= maxScore * 0.5) {
+                resultsDiv.classList.add('bg-yellow-50', 'border-yellow-300');
+                document.getElementById('score-display').classList.add('text-yellow-700');
+            } else {
+                resultsDiv.classList.add('bg-red-50', 'border-red-300');
+                document.getElementById('score-display').classList.add('text-red-700');
+            }
+        }
+    </script>
 </body>
 </html>
