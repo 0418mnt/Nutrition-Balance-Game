@@ -58,7 +58,7 @@
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl p-6 md:p-10 border-t-8 border-primary">
         
         <h1 class="text-3xl md:text-4xl font-bold text-gray-800 text-center mb-6">
-            栄養バランス調理チャレンジ
+            Nuttori
         </h1>
         
         <!-- コントロールエリア -->
@@ -78,48 +78,9 @@
             <!-- 対象者選択 -->
             <div class="w-full md:w-auto">
                 <label for="target" class="block text-sm font-medium text-gray-600 mb-1">対象者:</label>
-                <select id="target" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
-                    <option value="子供">子供</option>
-                    <option value="成人男性">成人男性</option>
-                    <option value="成人女性">成人女性</option>
-                    <option value="お年寄り">お年寄り</option>
-                </select>
-            </div>
-            
-            <!-- ゲーム開始ボタン -->
-            <button onclick="startGame()" class="w-full md:w-auto mt-6 md:mt-0 bg-primary text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-green-600 transition duration-150 transform hover:scale-[1.03]">
-                ゲーム開始
-            </button>
-        </div>
-
-        <hr class="border-gray-200 mb-8">
-        
-        <!-- ゲームエリア -->
-        <div id="game-area" class="space-y-6">
-            <h2 class="text-2xl font-semibold text-gray-700">献立作成</h2>
-            <p id="target-display" class="text-lg font-medium text-blue-600 bg-blue-50 p-3 rounded-lg"></p>
-            
-            <!-- 食品選択肢 -->
-            <div class="p-4 border border-dashed border-gray-300 rounded-xl">
-                <h3 class="text-xl font-medium text-gray-700 mb-4">食材・料理の選択</h3>
-                <div id="food-selection" class="flex flex-wrap gap-3">
-                    <!-- JavaScriptで選択肢を表示 -->
-                    <p class="text-gray-500">↑「ゲーム開始」ボタンを押してください</p>
-                </div>
-            </div>
-            
-            <!-- 現在の献立 -->
-            <div id="current-meal" class="p-4 bg-gray-50 border rounded-xl shadow-inner">
-                <h3 class="text-xl font-medium text-gray-700 mb-3">現在の献立:</h3>
-                <ul id="selected-foods-list" class="list-disc list-inside space-y-1 text-gray-600 ml-4">
-                    <li>献立に食品を追加してください</li>
-                </ul>
-            </div>
-
-            <!-- 評価ボタン -->
-            <div class="text-center pt-4">
+                <select id="target" class="w-full p-2 border border-gray-300 rounded-⭐
                 <button onclick="evaluateMeal()" class="bg-secondary text-gray-900 font-extrabold py-3 px-12 rounded-full shadow-xl hover:bg-yellow-400 transition duration-200 transform hover:scale-105 active:scale-95 border-b-4 border-yellow-600">
-                    💯 献立を評価する
+                 ⭐ 献立を評価する
                 </button>
             </div>
         </div>
@@ -340,7 +301,7 @@
         }
 
         // ---------------------------------------------
-        // 💯 評価ロジック
+        // ⭐ 評価ロジック
         // ---------------------------------------------
 
         function calculateNutrition() {
