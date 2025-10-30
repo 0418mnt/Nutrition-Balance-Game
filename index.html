@@ -69,8 +69,8 @@
                 <label for="difficulty" class="block text-sm font-medium text-gray-600 mb-1">難易度:</label>
                 <select id="difficulty" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary">
                     <option value="easy">初級 (完成品選択)</option>
-                    <option value="medium">中級 (一部素材から)</option>
-                    <option value="hard">上級 (全て素材から)</option>
+                    <option value="medium">中級 (全て選択可能)</option>
+                    <option value="hard">上級 (主食＋素材から選択)</option>
                     <option value="chef">料理人モード</option>
                 </select>
             </div>
@@ -145,17 +145,65 @@
 
         // P: タンパク質(g), L: 脂質(g), C: 炭水化物(g), V: 野菜量(仮想), kcal: カロリー(kcal)
         const FOOD_NUTRITION_DATA = {
+            /* ---------------- 主食 (Staples) ---------------- */
             "ごはん": { type: "主食", P: 5, L: 1, C: 80, V: 0, kcal: 350 },
-            "鮭の塩焼き": { type: "主菜", P: 40, L: 10, C: 0, V: 0, kcal: 250 },
-            "きゅうり": { type: "素材", P: 1, L: 0, C: 5, V: 50, kcal: 15 },
-            "ゆで卵": { type: "主菜", P: 15, L: 12, C: 1, V: 0, kcal: 160 },
-            "豆腐 (木綿)": { type: "素材", P: 10, L: 6, C: 2, V: 0, kcal: 100 },
-            "麻婆豆腐": { type: "主菜", P: 20, L: 20, C: 10, V: 10, kcal: 300 }, // 初級用
-            "野菜サラダ": { type: "副菜", P: 5, L: 5, C: 10, V: 80, kcal: 100 }, // 初級用
-            "味噌汁": { type: "副菜", P: 3, L: 1, C: 5, V: 20, kcal: 50 }, // 初級用
             "パン": { type: "主食", P: 8, L: 5, C: 60, V: 0, kcal: 300 },
+            "うどん": { type: "主食", P: 7, L: 1, C: 60, V: 0, kcal: 280 },
+            "パスタ": { type: "主食", P: 10, L: 2, C: 70, V: 0, kcal: 350 },
+            "玄米ごはん": { type: "主食", P: 6, L: 2, C: 75, V: 0, kcal: 340 },
+            "蕎麦 (かけ)": { type: "主食", P: 12, L: 3, C: 55, V: 5, kcal: 290 },
+            "サンドイッチ": { type: "主食", P: 15, L: 15, C: 50, V: 20, kcal: 400 },
+            "おにぎり (梅)": { type: "主食", P: 3, L: 0, C: 50, V: 0, kcal: 210 },
+            "食パン (2枚)": { type: "主食", P: 6, L: 4, C: 45, V: 0, kcal: 250 },
+
+            /* ---------------- 主菜 (Mains) ---------------- */
+            "鮭の塩焼き": { type: "主菜", P: 40, L: 10, C: 0, V: 0, kcal: 250 },
+            "ゆで卵": { type: "主菜", P: 15, L: 12, C: 1, V: 0, kcal: 160 },
+            "麻婆豆腐": { type: "主菜", P: 20, L: 20, C: 10, V: 10, kcal: 300 }, 
+            "豚肉の生姜焼き": { type: "主菜", P: 35, L: 25, C: 10, V: 10, kcal: 450 },
+            "ハンバーグ": { type: "主菜", P: 30, L: 30, C: 15, V: 5, kcal: 500 },
+            "鶏肉の照り焼き": { type: "主菜", P: 38, L: 15, C: 10, V: 0, kcal: 350 },
+            "鯖の味噌煮": { type: "主菜", P: 35, L: 25, C: 10, V: 0, kcal: 410 },
+            "天ぷら盛り合わせ": { type: "主菜", P: 20, L: 40, C: 30, V: 30, kcal: 550 }, // 脂質高め
+            "ステーキ (赤身)": { type: "主菜", P: 50, L: 15, C: 0, V: 0, kcal: 380 },
+            "エビフライ (2尾)": { type: "主菜", P: 18, L: 25, C: 20, V: 0, kcal: 430 }, // 脂質高め
+            
+            /* ---------------- 副菜 (Sides) ---------------- */
+            "野菜サラダ": { type: "副菜", P: 5, L: 5, C: 10, V: 80, kcal: 100 }, 
+            "味噌汁": { type: "副菜", P: 3, L: 1, C: 5, V: 20, kcal: 50 }, 
+            "ほうれん草のおひたし": { type: "副菜", P: 4, L: 1, C: 5, V: 60, kcal: 50 },
+            "ひじきの煮物": { type: "副菜", P: 5, L: 5, C: 15, V: 40, kcal: 130 },
+            "豚汁": { type: "副菜", P: 15, L: 10, C: 15, V: 70, kcal: 200 }, // 高タンパク・高野菜の万能副菜
+            "冷奴": { type: "副菜", P: 10, L: 6, C: 2, V: 0, kcal: 100 },
+            "納豆": { type: "副菜", P: 10, L: 5, C: 10, V: 0, kcal: 110 },
+            "きんぴらごぼう": { type: "副菜", P: 3, L: 3, C: 25, V: 40, kcal: 150 }, // 炭水化物多め
+            "漬物 (少量)": { type: "副菜", P: 1, L: 0, C: 5, V: 10, kcal: 20 },
+            "ポテトサラダ": { type: "副菜", P: 5, L: 15, C: 25, V: 10, kcal: 250 }, // 脂質/炭水化物多め
+            
+            /* ---------------- 素材 (Ingredients) ---------------- */
+            "きゅうり": { type: "素材", P: 1, L: 0, C: 5, V: 50, kcal: 15 },
+            "豆腐 (木綿)": { type: "素材", P: 10, L: 6, C: 2, V: 0, kcal: 100 },
             "鶏むね肉": { type: "素材", P: 50, L: 5, C: 0, V: 0, kcal: 250 },
             "ブロッコリー": { type: "素材", P: 5, L: 0, C: 10, V: 100, kcal: 50 },
+            "牛肉": { type: "素材", P: 45, L: 35, C: 0, V: 0, kcal: 500 },
+            "トマト": { type: "素材", P: 1, L: 0, C: 5, V: 50, kcal: 20 },
+            "レタス": { type: "素材", P: 1, L: 0, C: 2, V: 40, kcal: 10 },
+            "じゃがいも": { type: "素材", P: 3, L: 0, C: 40, V: 10, kcal: 170 },
+            "アボカド": { type: "素材", P: 2, L: 20, C: 8, V: 10, kcal: 230 }, // 脂質多め
+            "海苔 (数枚)": { type: "素材", P: 2, L: 0, C: 3, V: 10, kcal: 20 },
+            "マヨネーズ (大さじ1)": { type: "素材", P: 0, L: 15, C: 1, V: 0, kcal: 140 }, // ほぼ脂質
+            "油揚げ": { type: "素材", P: 8, L: 10, C: 1, V: 0, kcal: 130 },
+            "白米 (大盛り)": { type: "素材", P: 7, L: 1, C: 110, V: 0, kcal: 480 }, // カロリー高め
+            "ツナ缶 (水煮)": { type: "素材", P: 25, L: 5, C: 0, V: 0, kcal: 150 },
+            "さつまいも": { type: "素材", P: 2, L: 0, C: 50, V: 10, kcal: 220 }, // 炭水化物と食物繊維
+            "かぼちゃ": { type: "素材", P: 3, L: 1, C: 20, V: 60, kcal: 90 }, // 野菜かつ炭水化物
+            "きのこ (一皿)": { type: "素材", P: 4, L: 1, C: 10, V: 70, kcal: 50 }, // 低カロリー、高ビタミン
+            "わかめ (乾燥)": { type: "素材", P: 1, L: 0, C: 2, V: 30, kcal: 10 }, // 海藻、ミネラル
+            "鶏もも肉": { type: "素材", P: 35, L: 20, C: 0, V: 0, kcal: 320 }, // 鶏むねより脂質多め
+            "マグロ (刺身)": { type: "素材", P: 45, L: 5, C: 0, V: 0, kcal: 230 }, // 高タンパク、低脂質
+            "卵黄 (1個)": { type: "素材", P: 3, L: 5, C: 0, V: 0, kcal: 60 }, // 脂質、コレステロール
+            "牛乳 (200ml)": { type: "素材", P: 7, L: 8, C: 10, V: 0, kcal: 130 }, // カルシウム
+            "植物油 (大さじ1)": { type: "素材", P: 0, L: 14, C: 0, V: 0, kcal: 120 }, // ほぼ脂質
         };
 
         // 対象者別の一食の推奨摂取量（簡略化：一日の1/3程度を想定）
@@ -177,18 +225,26 @@
             // 料理人モードの特殊設定
             if (difficulty === 'chef') {
                 const targets = ["子供", "成人男性", "成人女性", "お年寄り"];
+                
+                // 1. 献立を作る対象者 (表示用) - 3人ランダムに選択
                 const randomTargets = [];
-                for (let i = 0; i < 3; i++) {
-                    // ランダムに3人選択
-                    randomTargets.push(targets[Math.floor(Math.random() * targets.length)]);
-                }
+                // 確実に2種類以上の対象者を選ぶようにする
+                let tempTargets = [...targets];
+                randomTargets.push(tempTargets.splice(Math.floor(Math.random() * tempTargets.length), 1)[0]);
+                randomTargets.push(tempTargets.splice(Math.floor(Math.random() * tempTargets.length), 1)[0]);
+                randomTargets.push(targets[Math.floor(Math.random() * targets.length)]); // 3人目は重複可
+
+                // 2. 評価基準とする対象者をランダムに選択
+                const evaluationTarget = targets[Math.floor(Math.random() * targets.length)];
+
                 document.getElementById('target-display').textContent = 
                     `対象者 (料理人モード): ${randomTargets.join(' と ')} (難易度: ${difficulty})`;
                 
-                // 料理人モードでは、ここでは成人男性の基準で評価を行います（簡易化のため）。
-                targetUser = '成人男性'; 
+                // 評価基準をtargetUserに設定
+                targetUser = evaluationTarget; 
+                
                 // カスタムアラートボックスの代わりに、UI内にメッセージを表示
-                showGameMessage("🔔 料理人モード開始！複数の対象者に合わせた献立を作ってください！\n（評価は成人男性の基準で進行します）");
+                showGameMessage(`🔔 料理人モード開始！${randomTargets.join('、')}の3人全員に合わせた献立を作ってください！\n（評価は**${evaluationTarget}**の栄養基準で厳しく行われます）`);
             } else {
                 document.getElementById('target-display').textContent = 
                     `対象者: ${targetUser} (難易度: ${difficulty})`;
@@ -228,10 +284,13 @@
                 // 初級: 完成料理（主食、主菜、副菜）のみ
                 foodsToShow = allFoods.filter(f => f.type !== '素材');
             } else if (difficulty === 'medium') {
-                // 中級: 主食/主菜/副菜＋素材も全て表示
+                // 中級: 全てのカテゴリを表示
                 foodsToShow = allFoods;
-            } else {
-                // 上級/料理人モード: 全ての食品を表示
+            } else if (difficulty === 'hard') {
+                // 🌟 上級: 素材カテゴリ + 主食カテゴリから選択
+                foodsToShow = allFoods.filter(f => f.type === '素材' || f.type === '主食');
+            } else { // 'chef'モード
+                // 料理人モード: 全ての食品を表示
                 foodsToShow = allFoods;
             }
 
@@ -243,6 +302,10 @@
                 button.onclick = () => addFood(food.name);
                 selectionDiv.appendChild(button);
             });
+
+            if (foodsToShow.length === 0) {
+                 selectionDiv.innerHTML = '<p class="text-gray-500">選択可能な食材がありません。難易度を見直すか、「ゲーム開始」を押してください。</p>';
+            }
         }
 
         function addFood(foodName) {
@@ -302,7 +365,7 @@
                 return;
             }
             
-            const target = targetUser; // 現在の対象者
+            const target = targetUser; // 現在の対象者 (料理人モードではランダムに選ばれた評価基準)
             const targetRDA = TARGET_RDA[target];
             const currentNutrition = calculateNutrition();
             
@@ -374,7 +437,7 @@
             
             // 現在の栄養素表示（デバッグ・学習用）
             const nutritionSummary = `
---- 献立の栄養価サマリー (対象者: ${target}) ---
+--- 献立の栄養価サマリー (評価基準: ${target}) ---
 P (タンパク質): ${currentNutrition.P.toFixed(1)} g (目標: ${targetRDA.P_min}-${targetRDA.P_max}g)
 L (脂質): ${currentNutrition.L.toFixed(1)} g (目標: ${targetRDA.L_min}-${targetRDA.L_max}g)
 C (炭水化物): ${currentNutrition.C.toFixed(1)} g (目標: ${targetRDA.C_min}-${targetRDA.C_max}g)
